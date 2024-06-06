@@ -47,6 +47,7 @@ def cauchy(funcion,x0,epsilon1,epsilon2,M):
     xk=x0
     k=0
     while not terminar:
+        
         grad = np.array(gradiente(funcion,xk))
 
         if np.linalg.norm(grad) < epsilon1 or k >= M:
@@ -67,5 +68,39 @@ def cauchy(funcion,x0,epsilon1,epsilon2,M):
                 xk = x_k1
     return xk
 
+def exhaustive_search(x):#limit_inf:x[0],limit_sup:x[1]
+    accuracy=0.5
+    f=lambda x: x**2 + 3
+    npoints=2*(x[1] - (x[0]))/accuracy
+    # npoints=int(npoints)
+    # limites=np.linspace(x[0],x[1],npoints)
+
+    # Delta=(b-a)/n
+    Delta=(x[1]-(x[0]))/npoints
+
+
+    x1=x[0]
+    x2=x[0]+Delta
+    x3=x2+Delta
+    while True:
+        fx1=f(x1)
+        fx2=f(x2)
+        fx3=f(x3)
+        if(fx1 > fx2) and (fx2 < fx3):
+            return np.sum([x1,x3])/2
+        else: 
+            x1=x2
+            x2=x3
+            x3=x2+Delta
+
+        if x3 > x[1]:
+            return np.sum([x1,x3])/2
+            break
+        # print(fx1,fx2,fx3)
+
+
 himmenblau = lambda x: (((x[0]**2)+x[1]-11)**2) + ((x[0]+(x[1]**2)-7)**2)
-print('prueba',cauchy(himmenblau,np.array([0.0,0.0]),0.001,0.001,100))
+print('prueba1: ',cauchy(himmenblau,np.array([0.0,0.0]),0.001,0.001,100))
+
+# Prueba con busqueda exhaustiva
+print('prueba2: ',cauchy(exhaustive_search,np.array([1.0,2.0]),0.001,0.001,100))
