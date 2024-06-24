@@ -58,7 +58,7 @@ def cauchy(funcion,x0,epsilon1,epsilon2,M):
             
             alpha = busquedaDorada(alpha_funcion,epsilon=epsilon2,a=0.0,b=1.0)
             x_k1 = xk - alpha*grad
-            print(grad)
+            # print(grad)
 
             if np.linalg.norm(x_k1-xk)/(np.linalg.norm(xk)+0.00001) <= epsilon2:
                 terminar = True
@@ -68,4 +68,5 @@ def cauchy(funcion,x0,epsilon1,epsilon2,M):
     return xk
 
 himmenblau = lambda x: (((x[0]**2)+x[1]-11)**2) + ((x[0]+(x[1]**2)-7)**2)
-print('prueba',cauchy(himmenblau,np.array([0.0,0.0]),0.001,0.001,100))
+prueba_cauchy=cauchy(himmenblau,np.array([3.0,2.0]),0.001,0.001,100)
+print('prueba',prueba_cauchy)
